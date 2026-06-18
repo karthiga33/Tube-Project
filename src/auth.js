@@ -46,6 +46,28 @@ export function signIn(email, password) {
     user.authenticateUser(authDetails, {
       onSuccess: (session) => resolve(session),
       onFailure: (err) => reject(err),
+      newPasswordRequired: (userAttributes) => {
+        delete userAttributes.email_verified;
+        delete userAttributes.email;
+        user.completeNewPasswordChallenge(password, userAttributes, {
+          onSuccess: (session) => resolve(session),
+          onFailure: (err) => reject(err),
+          mfaSetup: (challengeName, challengeParameters) => {
+            // Skip MFA setup — resolve anyway
+            resolve(null);
+          },
+          mfaRequired: (challengeName, challengeParameters) => {
+            reject(new Error('MFA is required. Please contact admin.'));
+          },
+        });
+      },
+      mfaSetup: (challengeName, challengeParameters) => {
+        // MFA setup required — skip for now
+        reject(new Error('MFA setup required. Please contact admin to disable MFA.'));
+      },
+      mfaRequired: (challengeName, challengeParameters) => {
+        reject(new Error('MFA code required. Please contact admin.'));
+      },
     });
   });
 }

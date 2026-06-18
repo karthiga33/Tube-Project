@@ -5,7 +5,7 @@ import DashboardPage from './pages/DashboardPage';
 import ValidationPage from './pages/ValidationPage';
 import StatusPage from './pages/StatusPage';
 import AuthPage from './pages/AuthPage';
-import { getCurrentSession, signOut, getCurrentUser, getUserAttributes } from './auth';
+import { getCurrentSession, signOut, getUserAttributes } from './auth';
 import './index.css';
 
 function App() {
