@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './TopNav.css';
 
-const TopNav = () => {
+const TopNav = ({ userName, onLogout }) => {
   return (
     <header className="topnav">
       <nav className="topnav-links">
@@ -11,7 +11,8 @@ const TopNav = () => {
       </nav>
       <div className="topnav-brand">AR Automation</div>
       <div className="topnav-right">
-        {/* Auth placeholder — will be replaced with Cognito */}
+        <span className="admin-tag">{userName}</span>
+        <button className="btn-logout" onClick={onLogout}>Logout</button>
       </div>
     </header>
   );
